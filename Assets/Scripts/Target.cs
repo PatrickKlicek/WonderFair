@@ -1,8 +1,14 @@
+using System;
+using System.Collections;
 using UnityEngine;
 
 public class Target : MonoBehaviour
 {
-    private bool isRaised = false;
+    public static event Action<int> TargetHit;
+    public int points;
+    public float duration = 5;
+    [HideInInspector] public float raiseTimestamp = 0;
+
     private Animator animator;
 
     void Start()
@@ -10,21 +16,33 @@ public class Target : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
+    void Update()
+    {
+        if (raiseTimestamp != 0 && Time.time - raiseTimestamp > duration)
+            LowerTarget();
+    }
+
     [ContextMenu("Raise")]
     public void RaiseTarget()
     {
-        isRaised = true;
+        raiseTimestamp = Time.time;
         if (animator == null)
             animator = GetComponent<Animator>();
         animator.SetBool("isRaised", true);
     }
 
+    public void LowerTarget()
+    {
+        raiseTimestamp = 0;
+        animator.SetBool("isRaised", false);
+    }
+
     void OnCollisionEnter(Collision collision)
     {
-        if (isRaised && collision.collider.CompareTag("Hit"))
+        if (raiseTimestamp != 0 && collision.collider.CompareTag("Hit"))
         {
-            isRaised = false;
-            animator.SetBool("isRaised", false);
+            TargetHit.Invoke(points);
+            LowerTarget();
         }
     }
 }

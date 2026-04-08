@@ -328,7 +328,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   placeholder: {fileID: 5223133862244574424}
   ballPrefab: {fileID: 2908204849929807120, guid: ee329ca29372e1d43b205b8b08c9f0ab, type: 3}
-  ballSpeed: 10
+  ballSpeed: 12
   shootInterval: 0.5
 --- !u!1 &3535653901637423727
 GameObject:
