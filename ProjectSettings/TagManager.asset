@@ -31,6 +31,8 @@ TagManager:
   - QDSUIToggleCheckboxRadio
   - Hit
   - Target
+  - Can
+  - Ball
   layers:
   - Default
   - TransparentFX
