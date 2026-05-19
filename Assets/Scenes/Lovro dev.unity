@@ -3708,6 +3708,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 587935731326543060, guid: e8e1b13f4e350e342abeea68de363128, type: 3}
+      propertyPath: handle
+      value: 
+      objectReference: {fileID: 1756417657}
     - target: {fileID: 3447325236574212675, guid: e8e1b13f4e350e342abeea68de363128, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.294
@@ -3752,6 +3756,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CanSmashGame
       objectReference: {fileID: 0}
+    - target: {fileID: 7007648933759444469, guid: e8e1b13f4e350e342abeea68de363128, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 1622769235}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6718,6 +6726,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1690359361383398264, guid: fb261bccc649e674cbdf94c4f8b10085, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 1622769235}
     - target: {fileID: 3629200694705201988, guid: fb261bccc649e674cbdf94c4f8b10085, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.088
@@ -7585,6 +7597,11 @@ MonoBehaviour:
   installationRoutineCheckpoint:
     _installationRoutineId: 
     _installationVariants: []
+--- !u!4 &1756417657 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4674943441833666336, guid: fb261bccc649e674cbdf94c4f8b10085, type: 3}
+  m_PrefabInstance: {fileID: 1545509534}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1764533606 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5266845942525510880, guid: 048d05ecb819e4b4db751feaac9a96f1, type: 3}

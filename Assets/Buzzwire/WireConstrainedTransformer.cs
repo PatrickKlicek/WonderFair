@@ -13,6 +13,7 @@ public class WireConstrainedTransformer : MonoBehaviour, ITransformer
     [Range(0f, 1f)]
     public float rotationAlignSpeed = 0.15f;
 
+    private BuzzWireGame _buzzWireGame;
     private IGrabbable _grabbable;
     private bool _isTouching = false;
     private bool _isCooldown = false;
@@ -27,6 +28,11 @@ public class WireConstrainedTransformer : MonoBehaviour, ITransformer
     {
         var grabPoint = _grabbable.GrabPoints[0];
         _previousGrabPose = new Pose(grabPoint.position, grabPoint.rotation);
+
+        if (_buzzWireGame == null)
+        {
+            _buzzWireGame = GameObject.FindFirstObjectByType<BuzzWireGame>();
+        }
     }
 
     public void UpdateTransform()
@@ -132,7 +138,11 @@ public class WireConstrainedTransformer : MonoBehaviour, ITransformer
     public void OnWireTouched()
     {
         if (_isCooldown) return;
+        if (_buzzWireGame != null && !_buzzWireGame.IsRunning) return;
+
         _isTouching = true;
+
+        _buzzWireGame?.RegisterBuzz();
 
         if (buzzSound != null && !buzzSound.isPlaying)
             buzzSound.Play();
