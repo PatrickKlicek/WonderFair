@@ -6,16 +6,17 @@ using System.Collections;
 public class BuzzWireGame : CarnivalGame
 {
     public int buzzCount = 0;
-    public bool IsRunning => isRunning;
-
+    public static bool GameActive = false;
     public float baseScore = 13200f;
     public float penaltyPerBuzz = 0.2f;
     public TextMeshProUGUI finalScoreText;
+    public Scoreboard Scoreboard;
 
     public Transform handle;
     public float resetDelay = 10f;
     private Vector3 _initialLocalPosition;
     private Quaternion _initialLocalRotation;
+    private bool _gameActive = false;
 
     protected override void Start()
     {
@@ -34,7 +35,8 @@ public class BuzzWireGame : CarnivalGame
 
     protected override void Update()
     {
-        if (isRunning)
+        Debug.Log($"Update: GameActive:{BuzzWireGame.GameActive}, buzzCount:{buzzCount}");
+        if (BuzzWireGame.GameActive)
         {
             TimeSpan elapsed = GameManager.GM.timer.Elapsed;
 
@@ -51,52 +53,53 @@ public class BuzzWireGame : CarnivalGame
 
     public void OnRingEnteredStart()
     {
-        if (!isRunning)
+        if (!BuzzWireGame.GameActive)
         {
+            BuzzWireGame.GameActive = true;
+            GameManager.GM.inGame = false;
             buzzCount = 0;
             if (finalScoreText != null)
-            {
                 finalScoreText.gameObject.SetActive(false);
-            }
             StartGame();
-            Debug.Log("Start game");
         }
     }
 
     public void OnRingReachedEnd()
     {
-        if (isRunning)
+        if (BuzzWireGame.GameActive)
         {
+            BuzzWireGame.GameActive = false;
             float timeSeconds = (float)GameManager.GM.timer.Elapsed.TotalSeconds;
             float penaltyMultiplier = 1f / (1f + buzzCount * penaltyPerBuzz);
             int finalScore = Mathf.RoundToInt((baseScore / timeSeconds) * penaltyMultiplier);
             EndGame();
+            HighscoreManager.Instance.SubmitScore(HighscoreManager.BUZZWIRE, finalScore);
+            Scoreboard?.DisplayScores();
             finalScoreText.gameObject.SetActive(true);
             finalScoreText.text = $"{finalScore}";
-            Debug.Log("End game");
             StartCoroutine(ResetAfterDelay());
         }
     }
 
     public void RegisterBuzz()
     {
-        if (isRunning)
+        Debug.Log($"RegisterBuzz: GameActive:{BuzzWireGame.GameActive}, buzzCount:{buzzCount}");
+        if (BuzzWireGame.GameActive)
             buzzCount++;
     }
+
+    public bool IsRunning => BuzzWireGame.GameActive;
 
     private IEnumerator ResetAfterDelay()
     {
         yield return new WaitForSeconds(resetDelay);
-
         if (finalScoreText != null)
-        {
             finalScoreText.gameObject.SetActive(false);
-        }
-
         buzzCount = 0;
         scoreboard.text = "";
         timer.text = "";
-
+        GameManager.GM.inGame = false;
+        BuzzWireGame.GameActive = false;
         if (handle != null)
         {
             handle.localPosition = _initialLocalPosition;

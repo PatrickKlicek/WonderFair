@@ -16,6 +16,7 @@ public class CanSmash : CarnivalGame
     public float yVariance = 0.5f;
 
     public TextMeshProUGUI finalScoreText;
+    public Scoreboard Scoreboard;
 
     public bool IsRunning => isRunning;
 
@@ -161,6 +162,8 @@ public class CanSmash : CarnivalGame
     protected override void EndGame()
     {
         base.EndGame();
+        HighscoreManager.Instance.SubmitScore(HighscoreManager.CAN_SMASH, _cansKnocked);
+        Scoreboard?.DisplayScores();
 
         if (finalScoreText != null)
         {
