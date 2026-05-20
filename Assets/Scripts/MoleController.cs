@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(AudioSource))]
 public class MoleController : MonoBehaviour
 {
     static readonly int HashRise  = Animator.StringToHash("Rise");
@@ -16,12 +17,20 @@ public class MoleController : MonoBehaviour
     public static event Action<int> MoleHit;
     public int points;
 
-    private Animator   _animator;
-    private Coroutine  _fallCoroutine;
+    [Header("Hit Feedback")]
+    public AudioClip          whackSound;
+    public ParticleSystem     hitParticles;
+    public FloatingScorePopup scorePopup;
+    public Vector3            popupOffset = new Vector3(0, 0.3f, 0);
+
+    private Animator    _animator;
+    private AudioSource _audio;
+    private Coroutine   _fallCoroutine;
 
     void Awake()
     {
         _animator = GetComponent<Animator>();
+        _audio    = GetComponent<AudioSource>();
     }
 
     // called by MoleSpawner
@@ -31,7 +40,6 @@ public class MoleController : MonoBehaviour
         IsUp = true;
         _animator.SetTrigger(HashRise);
 
-        // automatic retreat after activeTime
         if (_fallCoroutine != null) StopCoroutine(_fallCoroutine);
         _fallCoroutine = StartCoroutine(AutoFall(activeTime));
     }
@@ -51,16 +59,29 @@ public class MoleController : MonoBehaviour
         }
 
         _animator.SetTrigger(HashWhack);
+
+        if (whackSound != null)
+            _audio.PlayOneShot(whackSound);
+
+        if (hitParticles != null)
+            hitParticles.Play();
+
+        if (scorePopup != null)
+        {
+            var popup = Instantiate(scorePopup, transform.position + popupOffset, Quaternion.identity);
+            popup.Init(points);
+        }
+
         MoleHit?.Invoke(points);
     }
 
-    public void OnRiseStart()  { }
+    public void OnRiseStart() { }
 
-    public void OnRiseEnd()    { IsUp = true;  _animator.SetBool(HashIsUp, true); }
+    public void OnRiseEnd()   { if (!IsWhacked) { IsUp = true; _animator.SetBool(HashIsUp, true); } }
 
-    public void OnFallStart()  { IsUp = false; _animator.SetBool(HashIsUp, false); }
+    public void OnFallStart() { IsUp = false; _animator.SetBool(HashIsUp, false); }
 
-    public void OnFallEnd()    { IsWhacked = false; }
+    public void OnFallEnd()   { IsWhacked = false; }
 
     IEnumerator AutoFall(float delay)
     {

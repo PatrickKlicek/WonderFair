@@ -1,7 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(Get-ChildItem \"c:\\\\Users\\\\Sara\\\\Unity\\\\WonderFair\\\\Assets\\\\Scripts\\\\\" | Select-Object Name)"
-    ]
-  }
-}
