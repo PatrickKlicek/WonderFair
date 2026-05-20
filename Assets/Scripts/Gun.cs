@@ -1,3 +1,4 @@
+using Oculus.Interaction;
 using UnityEngine;
 
 public class Gun : MonoBehaviour
@@ -6,13 +7,14 @@ public class Gun : MonoBehaviour
     public GameObject ballPrefab;
     public float ballSpeed;
     public float shootInterval = 0.3f;
+    public GrabInteractable grabInteractable;
 
     private float shootTimestamp = 0;
 
     // Update is called once per frame
     void Update()
     {
-        if (OVRInput.GetDown(OVRInput.RawButton.RIndexTrigger))
+        if ((OVRInput.GetDown(OVRInput.RawButton.RIndexTrigger) || OVRInput.GetDown(OVRInput.RawButton.LIndexTrigger)) && grabInteractable.State == InteractableState.Select)
         {
             if (Time.time -  shootTimestamp > shootInterval)
             {

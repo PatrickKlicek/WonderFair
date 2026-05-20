@@ -4680,31 +4680,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4755239214657870903, guid: 35c3cdcfa8a9d414ba7af0720895f7db, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.8000002
+      value: 3.7999997
       objectReference: {fileID: 0}
     - target: {fileID: 4755239214657870903, guid: 35c3cdcfa8a9d414ba7af0720895f7db, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.79999995
+      value: 0.168
       objectReference: {fileID: 0}
     - target: {fileID: 4755239214657870903, guid: 35c3cdcfa8a9d414ba7af0720895f7db, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.285
       objectReference: {fileID: 0}
     - target: {fileID: 4755239214657870903, guid: 35c3cdcfa8a9d414ba7af0720895f7db, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -1
+      value: -0.79335374
       objectReference: {fileID: 0}
     - target: {fileID: 4755239214657870903, guid: 35c3cdcfa8a9d414ba7af0720895f7db, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.00000001945262
+      value: 0.6087609
       objectReference: {fileID: 0}
     - target: {fileID: 4755239214657870903, guid: 35c3cdcfa8a9d414ba7af0720895f7db, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000014901161
+      value: -0.00000020588806
       objectReference: {fileID: 0}
     - target: {fileID: 4755239214657870903, guid: 35c3cdcfa8a9d414ba7af0720895f7db, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.00000035762784
+      value: 0.00000029279667
       objectReference: {fileID: 0}
     - target: {fileID: 4755239214657870903, guid: 35c3cdcfa8a9d414ba7af0720895f7db, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -4717,14 +4717,6 @@ PrefabInstance:
     - target: {fileID: 4755239214657870903, guid: 35c3cdcfa8a9d414ba7af0720895f7db, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7440714384393512889, guid: 35c3cdcfa8a9d414ba7af0720895f7db, type: 3}
-      propertyPath: m_UseGravity
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7440714384393512889, guid: 35c3cdcfa8a9d414ba7af0720895f7db, type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
