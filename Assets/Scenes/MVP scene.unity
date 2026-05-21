@@ -286,11 +286,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0.139, y: 0.015}
   m_SizeDelta: {x: 0.75, y: 0.5}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!4 &56458123 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7797674157670344191, guid: 2154d84b85364564a91514eaa48c1d5b, type: 3}
-  m_PrefabInstance: {fileID: 1299927494}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &173407823
 GameObject:
   m_ObjectHideFlags: 0
@@ -1461,11 +1456,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1572668029}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &717666226 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8351975425169769038, guid: 6ca194aab059cc543b429cf4d4d59bce, type: 3}
-  m_PrefabInstance: {fileID: 3525300086026134832}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &739006352
 GameObject:
   m_ObjectHideFlags: 0
@@ -2443,63 +2433,6 @@ Transform:
   - {fileID: 265182751}
   m_Father: {fileID: 1343368277}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
---- !u!1001 &1299927494
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 717666226}
-    m_Modifications:
-    - target: {fileID: 6104097938700069333, guid: 2154d84b85364564a91514eaa48c1d5b, type: 3}
-      propertyPath: m_Name
-      value: BuzzwireGame
-      objectReference: {fileID: 0}
-    - target: {fileID: 7797674157670344191, guid: 2154d84b85364564a91514eaa48c1d5b, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -5.021
-      objectReference: {fileID: 0}
-    - target: {fileID: 7797674157670344191, guid: 2154d84b85364564a91514eaa48c1d5b, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.319
-      objectReference: {fileID: 0}
-    - target: {fileID: 7797674157670344191, guid: 2154d84b85364564a91514eaa48c1d5b, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.143
-      objectReference: {fileID: 0}
-    - target: {fileID: 7797674157670344191, guid: 2154d84b85364564a91514eaa48c1d5b, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 7797674157670344191, guid: 2154d84b85364564a91514eaa48c1d5b, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7797674157670344191, guid: 2154d84b85364564a91514eaa48c1d5b, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 7797674157670344191, guid: 2154d84b85364564a91514eaa48c1d5b, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7797674157670344191, guid: 2154d84b85364564a91514eaa48c1d5b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7797674157670344191, guid: 2154d84b85364564a91514eaa48c1d5b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 7797674157670344191, guid: 2154d84b85364564a91514eaa48c1d5b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 2154d84b85364564a91514eaa48c1d5b, type: 3}
 --- !u!1 &1343368272
 GameObject:
   m_ObjectHideFlags: 0
@@ -4426,14 +4359,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 928849353589086728, guid: 6ca194aab059cc543b429cf4d4d59bce, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3842474478824696540, guid: 6ca194aab059cc543b429cf4d4d59bce, type: 3}
       propertyPath: m_Name
       value: Buzz Wire Booth
       objectReference: {fileID: 0}
+    - target: {fileID: 6622194358201584039, guid: 6ca194aab059cc543b429cf4d4d59bce, type: 3}
+      propertyPath: Scoreboard
+      value: 
+      objectReference: {fileID: 739006353}
     - target: {fileID: 8351975425169769038, guid: 6ca194aab059cc543b429cf4d4d59bce, type: 3}
       propertyPath: m_LocalPosition.x
       value: -8
@@ -4476,10 +4409,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 8351975425169769038, guid: 6ca194aab059cc543b429cf4d4d59bce, type: 3}
-      insertIndex: 0
-      addedObject: {fileID: 56458123}
+    m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 583652193369360844, guid: 6ca194aab059cc543b429cf4d4d59bce, type: 3}
       insertIndex: -1
@@ -4541,8 +4471,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Can Smash Booth
       objectReference: {fileID: 0}
+    - target: {fileID: 9035229271543224601, guid: c9992072f9ed6974a9f531ab695a0782, type: 3}
+      propertyPath: Scoreboard
+      value: 
+      objectReference: {fileID: 739006353}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 1134609043459959000, guid: c9992072f9ed6974a9f531ab695a0782, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 7056452143573115548, guid: c9992072f9ed6974a9f531ab695a0782, type: 3}
