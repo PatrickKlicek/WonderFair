@@ -32,6 +32,7 @@ public class WireConstrainedTransformer : MonoBehaviour, ITransformer
         if (_buzzWireGame == null)
         {
             _buzzWireGame = GameObject.FindFirstObjectByType<BuzzWireGame>();
+            Debug.Log($"BuzzWireGame pronaðen: {_buzzWireGame != null}");
         }
     }
 
@@ -138,9 +139,12 @@ public class WireConstrainedTransformer : MonoBehaviour, ITransformer
     public void OnWireTouched()
     {
         if (_isCooldown) return;
-        if (_buzzWireGame != null && !_buzzWireGame.IsRunning) return;
+        if (!BuzzWireGame.GameActive) return;
 
         _isTouching = true;
+
+        if (_buzzWireGame == null)
+            _buzzWireGame = GameObject.FindFirstObjectByType<BuzzWireGame>();
 
         _buzzWireGame?.RegisterBuzz();
 

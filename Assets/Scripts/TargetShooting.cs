@@ -13,6 +13,7 @@ public class TargetShooting : CarnivalGame
     public float movingTargetRaiseIntervalStart = 5;
     public float movingTargetSpeedupInterval = 10;
     public float movingTargetSpeedupIncrement = 0.5f;
+    public Scoreboard Scoreboard;
 
     private List<Target> targets = new();
     private float targetRaiseInterval;
@@ -83,6 +84,8 @@ public class TargetShooting : CarnivalGame
     protected override void EndGame()
     {
         base.EndGame();
+        HighscoreManager.Instance.SubmitScore(HighscoreManager.DUCK_SHOOTING, score);
+        Scoreboard?.DisplayScores();
 
         foreach (Target target in targets)
         {
