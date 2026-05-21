@@ -1,11 +1,10 @@
 using Oculus.Interaction;
+using UnityEditor.XR.LegacyInputHelpers;
 using UnityEngine;
 
 public class CameraRaiseLower : MonoBehaviour
 {
-    public Transform anchorLeft;
-    public Transform anchorRight;
-    public Transform anchorCenter;
+    public CameraOffset cameraOffset;
     public float minHeight;
     public float maxHeight;
     public float heightIncrement = 0.05f;
@@ -19,17 +18,6 @@ public class CameraRaiseLower : MonoBehaviour
 
     void UpdateCameraHeight(float diff)
     {
-        UpdateTransformHeight(anchorLeft, diff);
-        UpdateTransformHeight(anchorRight, diff);
-        UpdateTransformHeight(anchorCenter, diff);
-    }
-
-    void UpdateTransformHeight(Transform t, float d)
-    {
-        t.position = new Vector3(
-            t.position.x,
-            Mathf.Clamp(t.position.y + d, minHeight, maxHeight),
-            t.position.z
-            );
+        cameraOffset.cameraYOffset = Mathf.Clamp(cameraOffset.cameraYOffset + diff, minHeight, maxHeight);
     }
 }
