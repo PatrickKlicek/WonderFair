@@ -4,6 +4,7 @@ using System.Collections.Generic;
 public class WhackAMole : CarnivalGame
 {
     private MoleSpawner _moleSpawner;
+    public Scoreboard Scoreboard;
 
     protected override void Start()
     {
