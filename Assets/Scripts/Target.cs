@@ -7,6 +7,7 @@ public class Target : MonoBehaviour
     public static event Action<int> TargetHit;
     public int points;
     public float duration = 5;
+    public GameObject scorePopup;
     [HideInInspector] public float raiseTimestamp = 0;
 
     private Animator animator;
@@ -42,6 +43,8 @@ public class Target : MonoBehaviour
         if (raiseTimestamp != 0 && collision.collider.CompareTag("Hit"))
         {
             TargetHit.Invoke(points);
+            GameObject sp = Instantiate(scorePopup, transform.position, Quaternion.identity);
+            sp.GetComponent<FloatingScorePopup>().Init(points);
             LowerTarget();
         }
     }

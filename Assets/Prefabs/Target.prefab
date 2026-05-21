@@ -207,4 +207,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   points: 10
   duration: 5
+  scorePopup: {fileID: 1998368425249645344, guid: a4b9a332c9b617c4db1b0978a3eb8210, type: 3}
   raiseTimestamp: 0

@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using Oculus.Interaction;
 using UnityEngine;
+using UnityEngine.XR;
 
 public class Gun : MonoBehaviour
 {
@@ -8,6 +10,8 @@ public class Gun : MonoBehaviour
     public float ballSpeed;
     public float shootInterval = 0.3f;
     public GrabInteractable grabInteractable;
+    [Range(0f, 1f)] public float hapticAmplitude = 0.8f;
+    public float hapticDuration = 0.1f;
 
     private float shootTimestamp = 0;
 
@@ -20,7 +24,17 @@ public class Gun : MonoBehaviour
             {
                 GameObject b = Instantiate(ballPrefab, placeholder.position, Quaternion.identity);
                 b.GetComponent<Rigidbody>().linearVelocity = placeholder.forward * ballSpeed;
+                SendHaptics();
             }
         }
+    }
+
+    void SendHaptics()
+    {
+        var devices = new List<InputDevice>();
+        InputDevices.GetDevicesWithCharacteristics(
+            InputDeviceCharacteristics.Controller | InputDeviceCharacteristics.HeldInHand, devices);
+        foreach (var device in devices)
+            device.SendHapticImpulse(0, hapticAmplitude, hapticDuration);
     }
 }

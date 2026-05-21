@@ -328,9 +328,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   placeholder: {fileID: 5223133862244574424}
   ballPrefab: {fileID: 2908204849929807120, guid: ee329ca29372e1d43b205b8b08c9f0ab, type: 3}
-  ballSpeed: 12
+  ballSpeed: 15
   shootInterval: 0.5
   grabInteractable: {fileID: 950988854410527114}
+  hapticAmplitude: 0.9
+  hapticDuration: 0.1
 --- !u!1 &3535653901637423727
 GameObject:
   m_ObjectHideFlags: 0
