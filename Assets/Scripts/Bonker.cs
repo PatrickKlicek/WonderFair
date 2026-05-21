@@ -21,9 +21,9 @@ public class Bonker : MonoBehaviour
         if (mole != null && mole.IsUp && !mole.IsWhacked)
         {
             Debug.Log("Hit mole!");
-            debugText.text = "Hit!";
             mole.Whack();
             SendHaptics();
+            if (debugText != null) debugText.text = "Hit!";
         }
     }
 
