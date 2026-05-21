@@ -33,6 +33,8 @@ public class WhackAMole : CarnivalGame
         base.EndGame();
         if (_moleSpawner != null)
             _moleSpawner.StopGame();
+            HighscoreManager.Instance.SubmitScore(HighscoreManager.WHACK_A_MOLE, score);
+            Scoreboard?.DisplayScores();
     }
 
     protected override void Update()
