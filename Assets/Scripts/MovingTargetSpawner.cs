@@ -5,6 +5,7 @@ public class MovingTargetSpawner : MonoBehaviour
     public Transform spawn;
     public GameObject targetPrefab;
     public float targetSpeed = 3;
+    public float targetDurationOffset = 0;
 
     [ContextMenu("Spawn")]
     public void Spawn()
@@ -12,6 +13,8 @@ public class MovingTargetSpawner : MonoBehaviour
         GameObject t = Instantiate(targetPrefab, spawn.position, transform.rotation, transform);
         t.transform.Rotate(Vector3.forward * 90);
         t.GetComponent<Rigidbody>().linearVelocity = spawn.forward * targetSpeed;
-        t.GetComponent<Target>().RaiseTarget();
+        Target tt = t.GetComponent<Target>();
+        tt.duration += targetDurationOffset;
+        tt.RaiseTarget();
     }
 }

@@ -1,3 +1,4 @@
+using Oculus.Interaction.Locomotion;
 using System;
 using TMPro;
 using UnityEngine;
@@ -8,6 +9,7 @@ public abstract class CarnivalGame : MonoBehaviour
     public int gameDuration = 120;
     public TextMeshProUGUI timer;
     public TextMeshProUGUI scoreboard;
+    public TeleportInteractable teleportScript;
 
     protected TimeSpan gameDurationTimespan;
     protected TimeSpan timeLeft;
@@ -51,6 +53,7 @@ public abstract class CarnivalGame : MonoBehaviour
             isRunning = true;
             GameManager.GM.inGame = true;
             GameManager.GM.timer.Restart();
+            teleportScript.AllowTeleport = false;
         }
 
         StartGameLogic();
@@ -64,6 +67,7 @@ public abstract class CarnivalGame : MonoBehaviour
     {
         isRunning = false;
         GameManager.GM.inGame = false;
+        teleportScript.AllowTeleport = true;
         //GameManager.GM.score += score;
     }
 

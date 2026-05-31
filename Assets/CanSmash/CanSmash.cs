@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 public class CanSmash : CarnivalGame
 {
+    [Header("Game specific")]
     public Transform canParent;
     public Rigidbody[] cans;
 

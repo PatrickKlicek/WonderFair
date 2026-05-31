@@ -5,6 +5,7 @@ using System.Collections;
 
 public class BuzzWireGame : CarnivalGame
 {
+    [Header("Game specific")]
     public int buzzCount = 0;
     public static bool GameActive = false;
     public float baseScore = 13200f;
