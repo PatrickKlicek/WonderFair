@@ -33,6 +33,7 @@ TagManager:
   - Target
   - Can
   - Ball
+  - Hand
   layers:
   - Default
   - TransparentFX
