@@ -1,14 +1,18 @@
-using UnityEngine;
 using Oculus.Interaction;
+using System.Collections.Generic;
+using UnityEngine.XR;
+using UnityEngine;
 using System.Collections;
 
 public class WireConstrainedTransformer : MonoBehaviour, ITransformer
 {
     public WireSpline wire;
-    public float ringRadius = 0.02f;
+    public float ringRadius = 0.01f;
     public Transform ringCenter;
     public AudioSource buzzSound;
-    private Vector3 _smoothedTangent = Vector3.up;
+
+    [Range(0f, 1f)] public float hapticAmplitude = 0.8f;
+    public float hapticDuration = 0.1f;
 
     [Range(0f, 1f)]
     public float rotationAlignSpeed = 0.15f;
@@ -18,6 +22,11 @@ public class WireConstrainedTransformer : MonoBehaviour, ITransformer
     private bool _isTouching = false;
     private bool _isCooldown = false;
     private Pose _previousGrabPose;
+
+    [Header("Constraint Settings")]
+    [SerializeField] private float maxStepSize = 0.005f;
+    [SerializeField] private int maxSubsteps = 10;
+    [SerializeField] private float snapThreshold = 0.15f;
 
     public void Initialize(IGrabbable grabbable)
     {
@@ -30,73 +39,75 @@ public class WireConstrainedTransformer : MonoBehaviour, ITransformer
         _previousGrabPose = new Pose(grabPoint.position, grabPoint.rotation);
 
         if (_buzzWireGame == null)
-        {
             _buzzWireGame = GameObject.FindFirstObjectByType<BuzzWireGame>();
-            Debug.Log($"BuzzWireGame pronaðen: {_buzzWireGame != null}");
-        }
     }
 
     public void UpdateTransform()
     {
+        if (wire == null) return;
+
         var grabPoint = _grabbable.GrabPoints[0];
         Pose currentGrabPose = new Pose(grabPoint.position, grabPoint.rotation);
 
-        Quaternion rotationDelta = currentGrabPose.rotation * Quaternion.Inverse(_previousGrabPose.rotation);
-        Vector3 positionDelta = currentGrabPose.position - _previousGrabPose.position;
-        transform.rotation = rotationDelta * transform.rotation;
-        transform.position += positionDelta;
-
-        _previousGrabPose = currentGrabPose;
-
-        if (wire == null) return;
-
-        float stepSize = wire.wireRadius * 0.5f;
-        float totalDelta = positionDelta.magnitude;
-        int steps = Mathf.Max(1, Mathf.CeilToInt(totalDelta / stepSize));
-
-        for (int step = 0; step < steps; step++)
+        float jumpDist = Vector3.Distance(currentGrabPose.position, _previousGrabPose.position);
+        if (jumpDist > snapThreshold)
         {
+            _previousGrabPose = currentGrabPose;
+            return;
+        }
+
+        Vector3 positionDelta = currentGrabPose.position - _previousGrabPose.position;
+        Quaternion rotationDelta = currentGrabPose.rotation * Quaternion.Inverse(_previousGrabPose.rotation);
+
+        int steps = Mathf.Clamp(
+            Mathf.CeilToInt(positionDelta.magnitude / maxStepSize),
+        1, maxSubsteps
+        );
+
+        for (int i = 0; i < steps; i++)
+        {
+            transform.position += positionDelta / steps;
+            transform.rotation = rotationDelta * transform.rotation;
             ApplyConstraint();
         }
+
+        _previousGrabPose = currentGrabPose;
     }
 
     private void ApplyConstraint()
     {
         Vector3 centerPos = ringCenter.position;
         Vector3 closest = wire.GetClosestPoint(centerPos);
-        float dist = Vector3.Distance(centerPos, closest);
-        float maxDist = wire.wireRadius + ringRadius;
 
-        bool touching = dist > maxDist * 0.95f;
+        Vector3 wireTangent = GetWireTangent(closest);
+        if (wireTangent == Vector3.zero) wireTangent = Vector3.up;
 
-        if (touching)
+        Vector3 toCenter = centerPos - closest;
+        Vector3 toCenter_alongWire = Vector3.Project(toCenter, wireTangent);
+        Vector3 toCenter_radial = toCenter - toCenter_alongWire;
+        float radialDist = toCenter_radial.magnitude;
+
+        float effectiveWireRadius = wire.wireRadius > 0.001f ? wire.wireRadius : 0.005f;
+        float maxAllowedDist = ringRadius - effectiveWireRadius;
+        if (maxAllowedDist <= 0) return;
+
+        if (radialDist > maxAllowedDist)
         {
-            Vector3 radialDir = (centerPos - closest).normalized;
+            Vector3 radialDir = radialDist > 0.0001f
+                ? toCenter_radial / radialDist
+                : GetPerpendicularToTangent(wireTangent);
 
-            if (dist < 0.001f)
-                radialDir = transform.up;
+            Vector3 correctedCenter = closest + toCenter_alongWire + radialDir * maxAllowedDist;
+            transform.position += correctedCenter - centerPos;
 
-            Vector3 targetCenter = closest + radialDir * maxDist;
-            transform.position += targetCenter - centerPos;
-
-            Vector3 wireTangent = GetWireTangent(closest);
-            _smoothedTangent = Vector3.Slerp(_smoothedTangent, wireTangent, 0.3f);
-
-            if (_smoothedTangent != Vector3.zero)
-            {
-                Vector3 currentUp = transform.up;
-                Vector3 rotAxis = Vector3.Cross(currentUp, _smoothedTangent);
-
-                if (rotAxis.sqrMagnitude > 0.0001f)
-                {
-                    float angle = Vector3.SignedAngle(currentUp, _smoothedTangent, rotAxis);
-                    transform.RotateAround(ringCenter.position, rotAxis, angle * rotationAlignSpeed);
-                }
-            }
-
-            if (!_isTouching && !_isCooldown)
-                OnWireTouched();
+            OnWireTouched();
         }
+    }
+
+    private Vector3 GetPerpendicularToTangent(Vector3 tangent)
+    {
+        Vector3 candidate = Mathf.Abs(tangent.y) < 0.9f ? Vector3.up : Vector3.right;
+        return Vector3.Cross(tangent, candidate).normalized;
     }
 
     private Vector3 GetWireTangent(Vector3 closestPoint)
@@ -142,14 +153,17 @@ public class WireConstrainedTransformer : MonoBehaviour, ITransformer
         if (!BuzzWireGame.GameActive) return;
 
         _isTouching = true;
+        _isCooldown = true;
 
         if (_buzzWireGame == null)
             _buzzWireGame = GameObject.FindFirstObjectByType<BuzzWireGame>();
 
-        _buzzWireGame?.RegisterBuzz();
-
         if (buzzSound != null && !buzzSound.isPlaying)
+        {
             buzzSound.Play();
+            SendHaptics();
+            _buzzWireGame.buzzCount++;
+        }
 
         StartCoroutine(ResetTouching());
     }
@@ -164,5 +178,14 @@ public class WireConstrainedTransformer : MonoBehaviour, ITransformer
 
         if (!_isTouching && buzzSound != null)
             buzzSound.Stop();
+    }
+
+    void SendHaptics()
+    {
+        var devices = new List<InputDevice>();
+        InputDevices.GetDevicesWithCharacteristics(
+            InputDeviceCharacteristics.Controller | InputDeviceCharacteristics.HeldInHand, devices);
+        foreach (var device in devices)
+            device.SendHapticImpulse(0, hapticAmplitude, hapticDuration);
     }
 }

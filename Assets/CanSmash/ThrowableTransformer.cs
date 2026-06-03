@@ -30,7 +30,7 @@ public class ThrowableTransformer : MonoBehaviour, ITransformer
         _grabbable.Transform.position = grabPoint.position;
         _grabbable.Transform.rotation = grabPoint.rotation;
 
-        if (trackingPos.Count > 15)
+        if (trackingPos.Count > 10)
             trackingPos.RemoveAt(0);
 
         trackingPos.Add(_grabbable.Transform.position);

@@ -34,6 +34,7 @@ TagManager:
   - Can
   - Ball
   - Hand
+  - Wire
   layers:
   - Default
   - TransparentFX
