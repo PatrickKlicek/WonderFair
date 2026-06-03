@@ -7,16 +7,37 @@ using TMPro;
 public class Bonker : MonoBehaviour
 {
     public TextMeshProUGUI debugText;
+    public Transform hammerHead;
+    public float velocityThreshold = 1f;
+    [Range(0f, 1f)] public float velocityMeasurePeriod = 0.5f;
 
     [Header("Haptics")]
-    [Range(0f, 1f)] public float hapticAmplitude = 0.8f;
+    [Range(0.01f, 1f)] public float hapticAmplitude = 0.8f;
     public float hapticDuration = 0.1f;
+
+    private float verticalVelocity;
+    private float previousHeight;
+    private float swingTimestamp = 0;
+
+    void Start()
+    {
+        previousHeight = hammerHead.position.y;
+    }
+
+    void FixedUpdate()
+    {
+        verticalVelocity = (hammerHead.position.y - previousHeight) / Time.deltaTime;
+        previousHeight = hammerHead.position.y;
+
+        if (verticalVelocity < -velocityThreshold) Debug.Log(verticalVelocity);
+        if (verticalVelocity < -velocityThreshold) swingTimestamp = Time.time;
+    }
 
     void OnTriggerEnter(Collider other)
     {
-        var mole = other.GetComponent<MoleController>();
-        if (mole == null)
-            mole = other.GetComponentInParent<MoleController>();
+        if (!other.CompareTag("Target") || Time.time - swingTimestamp > velocityMeasurePeriod) return;
+
+        var mole = other.GetComponentInParent<MoleController>();
 
         if (mole != null && mole.IsUp && !mole.IsWhacked)
         {

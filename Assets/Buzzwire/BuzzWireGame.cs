@@ -36,7 +36,7 @@ public class BuzzWireGame : CarnivalGame
 
     protected override void Update()
     {
-        Debug.Log($"Update: GameActive:{BuzzWireGame.GameActive}, buzzCount:{buzzCount}");
+        //Debug.Log($"Update: GameActive:{BuzzWireGame.GameActive}, buzzCount:{buzzCount}");
         if (BuzzWireGame.GameActive)
         {
             TimeSpan elapsed = GameManager.GM.timer.Elapsed;

@@ -10,7 +10,7 @@ public class Gun : MonoBehaviour
     public float ballSpeed;
     public float shootInterval = 0.3f;
     public GrabInteractable grabInteractable;
-    [Range(0f, 1f)] public float hapticAmplitude = 0.8f;
+    [Range(0.01f, 1f)] public float hapticAmplitude = 0.8f;
     public float hapticDuration = 0.1f;
 
     private float shootTimestamp = 0;

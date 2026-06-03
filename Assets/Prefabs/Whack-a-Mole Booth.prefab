@@ -137,6 +137,7 @@ MonoBehaviour:
   gameDuration: 60
   timer: {fileID: 3585574639578328496}
   scoreboard: {fileID: 8867195560558901326}
+  teleportScript: {fileID: 0}
   Scoreboard: {fileID: 0}
 --- !u!114 &4810073138863405305
 MonoBehaviour:
@@ -2161,7 +2162,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3070015173534644252, guid: 81787b70845984449b9791c59c38a0a2, type: 3}
       propertyPath: instanceId
-      value: 43448a9a-72c4-4c51-abb5-48543bb770ad
+      value: f308bef0-9a7a-404b-ab06-23a2a3e0c3d2
       objectReference: {fileID: 0}
     - target: {fileID: 3481537613671941793, guid: 81787b70845984449b9791c59c38a0a2, type: 3}
       propertyPath: _whackAMole
@@ -2235,6 +2236,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 5822978612636932169}
   m_SourcePrefab: {fileID: 100100000, guid: 81787b70845984449b9791c59c38a0a2, type: 3}
+--- !u!4 &2539838616799714154 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3112192896106946278, guid: 81787b70845984449b9791c59c38a0a2, type: 3}
+  m_PrefabInstance: {fileID: 580941471597217164}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3840581622101443851 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4414538720952729735, guid: 81787b70845984449b9791c59c38a0a2, type: 3}
@@ -2258,6 +2264,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugText: {fileID: 0}
+  hammerHead: {fileID: 2539838616799714154}
+  velocityThreshold: 8
+  velocityMeasurePeriod: 0.35
   hapticAmplitude: 0.8
   hapticDuration: 0.1
 --- !u!1001 &873456726213045108
