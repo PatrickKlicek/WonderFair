@@ -7,7 +7,6 @@ public class RingConstraint : MonoBehaviour
 
     void Start()
     {
-        // Uzmi root buzzwirehandle objekt
         _root = GetComponentInParent<WireConstrainedTransformer>().transform;
     }
 

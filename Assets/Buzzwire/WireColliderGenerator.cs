@@ -11,7 +11,6 @@ public class WireColliderGenerator : MonoBehaviour
 
     void GenerateCapsuleColliders()
     {
-        // Ukloni stari Mesh Collider
         MeshCollider old = wire.GetComponent<MeshCollider>();
         if (old != null) old.enabled = false;
 
@@ -29,7 +28,6 @@ public class WireColliderGenerator : MonoBehaviour
             cap.radius = wire.wireRadius;
             cap.direction = 1; // Y os
 
-            // Postavi poziciju i rotaciju izmeðu dvije toèke
             Vector3 mid = (a + b) / 2f;
             seg.transform.position = mid;
             seg.transform.up = (b - a).normalized;
