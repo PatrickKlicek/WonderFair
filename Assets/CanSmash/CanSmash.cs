@@ -23,7 +23,6 @@ public class CanSmash : CarnivalGame
     public FloatingScorePopup scorePopup;
     public Vector3 popupOffset = new Vector3(0, 0.3f, 0);
 
-    private int _ballsThrown;
     private int _cansKnocked;
     private int _ballsOnGround;
 
@@ -64,14 +63,16 @@ public class CanSmash : CarnivalGame
     {
         base.Update();
         if (isRunning)
+        {
             scoreboard.text = _cansKnocked.ToString();
+        }
     }
 
+    private bool gameRunning = false;
     protected override void StartGameLogic()
     {
-        if (isRunning) return;
+        if (gameRunning) return;
 
-        _ballsThrown = 0;
         _cansKnocked = 0;
         _ballsOnGround = 0;
 
@@ -79,6 +80,7 @@ public class CanSmash : CarnivalGame
             finalScoreText.gameObject.SetActive(false);
 
         ResetCans(randomOffset: false);
+        gameRunning = true;
     }
 
     public void OnCanFallen(int canIndex, Vector3 pos)
@@ -192,12 +194,12 @@ public class CanSmash : CarnivalGame
             finalScoreText.gameObject.SetActive(false);
 
         ResetCans(randomOffset: false);
-        _ballsThrown = 0;
         _cansKnocked = 0;
         _ballsOnGround = 0;
         _fallenCans.Clear();
         _isResetting = false;
-        scoreboard.text = "0";
+        scoreboard.text = "";
+        gameRunning = false;
     }
 
     public int GetCanIndex(Rigidbody rb)
