@@ -25,8 +25,6 @@ public class ResetCans : MonoBehaviour
 
     public void ResetAllObjects()
     {
-        ball?.Reset();
-
         for (int i = 0; i < cans.Length; i++)
         {
             if (canRbs[i] != null)

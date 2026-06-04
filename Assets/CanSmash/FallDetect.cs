@@ -6,11 +6,22 @@ public class FallDetect : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("TRIGGER HIT: " + other.name);
+
         if (other.CompareTag("Can"))
         {
-            int index = canSmash.GetCanIndex(other.GetComponent<Rigidbody>());
+            Debug.Log("CAN DETECTED!");
+
+            Rigidbody rb = other.GetComponent<Rigidbody>();
+            int index = canSmash.GetCanIndex(rb);
+
+            Debug.Log("INDEX: " + index);
+
             if (index >= 0)
-                canSmash.OnCanFallen(index);
+            {
+                Vector3 pos = other.transform.position;
+                canSmash.OnCanFallen(index, pos);
+            }
         }
     }
 }

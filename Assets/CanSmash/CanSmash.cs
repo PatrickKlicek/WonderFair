@@ -20,6 +20,8 @@ public class CanSmash : CarnivalGame
     public Scoreboard Scoreboard;
 
     public bool IsRunning => isRunning;
+    public FloatingScorePopup scorePopup;
+    public Vector3 popupOffset = new Vector3(0, 0.3f, 0);
 
     private int _ballsThrown;
     private int _cansKnocked;
@@ -30,7 +32,7 @@ public class CanSmash : CarnivalGame
     private Vector3 _setupInitialLocalPos;
 
     private bool _isResetting = false;
-    private HashSet<int> _fallenCans = new HashSet<int>();
+    public HashSet<int> _fallenCans = new HashSet<int>();
 
     protected override void Start()
     {
@@ -67,6 +69,8 @@ public class CanSmash : CarnivalGame
 
     protected override void StartGameLogic()
     {
+        if (isRunning) return;
+
         _ballsThrown = 0;
         _cansKnocked = 0;
         _ballsOnGround = 0;
@@ -75,10 +79,9 @@ public class CanSmash : CarnivalGame
             finalScoreText.gameObject.SetActive(false);
 
         ResetCans(randomOffset: false);
-        ResetBalls();
     }
 
-    public void OnCanFallen(int canIndex)
+    public void OnCanFallen(int canIndex, Vector3 pos)
     {
         if (!isRunning || _isResetting) return;
 
@@ -86,6 +89,11 @@ public class CanSmash : CarnivalGame
 
         _fallenCans.Add(canIndex);
         _cansKnocked++;
+        if (scorePopup != null)
+        {
+            var popup = Instantiate(scorePopup, pos + popupOffset, Quaternion.identity);
+            popup.Init(1);
+        }
 
         if (_fallenCans.Count >= cans.Length)
             StartCoroutine(ResetRound(resetBalls: true));
@@ -113,13 +121,6 @@ public class CanSmash : CarnivalGame
         }
 
         ResetCans(randomOffset: true);
-
-        if (resetBalls)
-        {
-            ResetBalls();
-            _ballsThrown = 0;
-            _ballsOnGround = 0;
-        }
 
         _fallenCans.Clear();
         _isResetting = false;
@@ -155,8 +156,16 @@ public class CanSmash : CarnivalGame
         {
             balls[i].linearVelocity = Vector3.zero;
             balls[i].angularVelocity = Vector3.zero;
+
+            balls[i].Sleep();
+
             balls[i].transform.position = _ballInitialPos[i];
             balls[i].transform.rotation = _ballInitialRot[i];
+
+            balls[i].WakeUp();
+            balls[i].isKinematic = true;
+            balls[i].isKinematic = false;
+            balls[i].useGravity = false;
         }
     }
 
@@ -183,7 +192,6 @@ public class CanSmash : CarnivalGame
             finalScoreText.gameObject.SetActive(false);
 
         ResetCans(randomOffset: false);
-        ResetBalls();
         _ballsThrown = 0;
         _cansKnocked = 0;
         _ballsOnGround = 0;

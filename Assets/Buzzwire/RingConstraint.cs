@@ -3,27 +3,39 @@ using Oculus.Interaction;
 
 public class RingConstraint : MonoBehaviour
 {
-    public AudioSource buzzSound;
-    private WireConstrainedTransformer wireTransformer;
-    private bool isGrabbed = false;
+    private Transform _root;
 
     void Start()
     {
-        wireTransformer = GetComponent<WireConstrainedTransformer>();
-        var grabbable = GetComponent<Grabbable>();
-        if (grabbable != null)
-            grabbable.WhenPointerEventRaised += OnPointerEvent;
+        _root = GetComponentInParent<WireConstrainedTransformer>().transform;
     }
 
-    void OnPointerEvent(PointerEvent evt)
+    void OnTriggerEnter(Collider other)
     {
-        if (evt.Type == PointerEventType.Select) isGrabbed = true;
-        if (evt.Type == PointerEventType.Unselect) isGrabbed = false;
+        ApplyPenetrationFix(other);
     }
 
-    public void OnWireTouched()
+    void OnTriggerStay(Collider other)
     {
-        if (!isGrabbed) return;
-        wireTransformer?.OnWireTouched();
+        ApplyPenetrationFix(other);
+    }
+
+    private void ApplyPenetrationFix(Collider other)
+    {
+        if (!other.CompareTag("Wire")) return;
+
+        SphereCollider mySphere = GetComponent<SphereCollider>();
+
+        if (Physics.ComputePenetration(
+            mySphere, transform.position, transform.rotation,
+            other, other.transform.position, other.transform.rotation,
+            out Vector3 direction, out float distance))
+        {
+            _root.position += direction * distance;
+
+            WireConstrainedTransformer transformer =
+                _root.GetComponent<WireConstrainedTransformer>();
+            transformer?.OnWireTouched();
+        }
     }
 }
