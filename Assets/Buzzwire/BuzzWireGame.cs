@@ -85,6 +85,7 @@ public class BuzzWireGame : CarnivalGame
                 finalScoreText.gameObject.SetActive(true);
                 finalScoreText.text = $"{finalScore}";
             }
+            Debug.Log("Kraj skrripte za ringReachEnd");
             StartCoroutine(ResetAfterDelay());
         }
     }
@@ -101,6 +102,7 @@ public class BuzzWireGame : CarnivalGame
 
     private IEnumerator ResetAfterDelay()
     {
+        Debug.Log("Usao u rreset afterr delay");
         yield return new WaitForSeconds(resetDelay);
         if (finalScoreText != null)
             finalScoreText.gameObject.SetActive(false);
