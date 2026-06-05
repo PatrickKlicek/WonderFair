@@ -40,14 +40,16 @@ public class BuzzWireGame : CarnivalGame
         {
             TimeSpan elapsed = GameManager.GM.timer.Elapsed;
 
-            if (elapsed.TotalSeconds < 10)
-                timer.text = string.Format("{0:0}.{1:0}", elapsed.Seconds, elapsed.Milliseconds / 100);
-            else if (elapsed.TotalSeconds < 60)
-                timer.text = string.Format("{0:00}.{1:0}", elapsed.Seconds, elapsed.Milliseconds / 100);
-            else
-                timer.text = string.Format("{0:0}:{1:00}", elapsed.Minutes, elapsed.Seconds);
-
-            scoreboard.text = buzzCount.ToString();
+            if (timer != null)
+            {
+                if (elapsed.TotalSeconds < 10)
+                    timer.text = string.Format("{0:0}.{1:0}", elapsed.Seconds, elapsed.Milliseconds / 100);
+                else if (elapsed.TotalSeconds < 60)
+                    timer.text = string.Format("{0:00}.{1:0}", elapsed.Seconds, elapsed.Milliseconds / 100);
+                else
+                    timer.text = string.Format("{0:0}:{1:00}", elapsed.Minutes, elapsed.Seconds);
+            }
+            if (scoreboard != null) scoreboard.text = buzzCount.ToString();
         }
     }
 
@@ -73,12 +75,16 @@ public class BuzzWireGame : CarnivalGame
             float timeSeconds = (float)GameManager.GM.timer.Elapsed.TotalSeconds;
             float penaltyMultiplier = 1f / (1f + buzzCount * penaltyPerBuzz);
             int finalScore = Mathf.RoundToInt((baseScore / timeSeconds) * penaltyMultiplier);
+            score = finalScore;
             EndGame();
             PlayEndSound();
             HighscoreManager.Instance.SubmitScore(HighscoreManager.BUZZWIRE, finalScore);
             Scoreboard?.DisplayScores();
-            finalScoreText.gameObject.SetActive(true);
-            finalScoreText.text = $"{finalScore}";
+            if (finalScoreText != null)
+            {
+                finalScoreText.gameObject.SetActive(true);
+                finalScoreText.text = $"{finalScore}";
+            }
             StartCoroutine(ResetAfterDelay());
         }
     }
@@ -90,7 +96,8 @@ public class BuzzWireGame : CarnivalGame
             buzzCount++;
     }
 
-    public bool IsRunning => GameActive;
+    public override bool IsRunning => GameActive;
+    public int           BuzzCount => buzzCount;
 
     private IEnumerator ResetAfterDelay()
     {
@@ -98,8 +105,8 @@ public class BuzzWireGame : CarnivalGame
         if (finalScoreText != null)
             finalScoreText.gameObject.SetActive(false);
         buzzCount = 0;
-        scoreboard.text = "";
-        timer.text = "";
+        if (scoreboard != null) scoreboard.text = "";
+        if (timer != null) timer.text = "";
         GameManager.GM.inGame = false;
         GameActive = false;
         if (handle != null)

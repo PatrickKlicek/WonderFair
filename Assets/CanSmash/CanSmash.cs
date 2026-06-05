@@ -19,7 +19,8 @@ public class CanSmash : CarnivalGame
     public TextMeshProUGUI finalScoreText;
     public Scoreboard Scoreboard;
 
-    public bool IsRunning => isRunning;
+    public override bool IsRunning => isRunning;
+    public override int  Score     => _cansKnocked;
     public FloatingScorePopup scorePopup;
     public Vector3 popupOffset = new Vector3(0, 0.3f, 0);
 
@@ -64,7 +65,7 @@ public class CanSmash : CarnivalGame
         base.Update();
         if (isRunning)
         {
-            scoreboard.text = _cansKnocked.ToString();
+            if (scoreboard != null) scoreboard.text = _cansKnocked.ToString();
         }
     }
 
@@ -194,11 +195,10 @@ public class CanSmash : CarnivalGame
             finalScoreText.gameObject.SetActive(false);
 
         ResetCans(randomOffset: false);
-        _cansKnocked = 0;
         _ballsOnGround = 0;
         _fallenCans.Clear();
         _isResetting = false;
-        scoreboard.text = "";
+        if (scoreboard != null) scoreboard.text = "";
         gameRunning = false;
     }
 

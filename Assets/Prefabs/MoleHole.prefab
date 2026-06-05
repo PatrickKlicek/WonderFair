@@ -339,7 +339,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   points: 10
-  whackSound: {fileID: 0}
+  spawnSound: {fileID: 8300000, guid: c3db597041e3f8d4ea5ec7f56d297184, type: 3}
+  whackSound: {fileID: 8300000, guid: da8d90a7cbe8c304ba5a3ea8157272fc, type: 3}
   hitParticles: {fileID: 0}
   scorePopup: {fileID: 1866332526885196095, guid: a4b9a332c9b617c4db1b0978a3eb8210, type: 3}
   popupOffset: {x: 0, y: 0.3, z: 0}
@@ -350,7 +351,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8708709788070387173}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}

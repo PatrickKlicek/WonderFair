@@ -60,7 +60,7 @@ public class HighscoreManager : MonoBehaviour
             LoadHighscore(game);
 
         IsLoaded = true;
-        Debug.Log("Svi highscoreovi uèitani.");
+        Debug.Log("Svi highscoreovi uï¿½itani.");
     }
 
     private void LoadHighscore(string gameName)
@@ -71,7 +71,7 @@ public class HighscoreManager : MonoBehaviour
         {
             string json = File.ReadAllText(path);
             _cache[gameName] = JsonUtility.FromJson<HighscoreData>(json);
-            Debug.Log($"Uèitan highscore za {gameName}: {_cache[gameName].entries.Count} unosa");
+            Debug.Log($"Uï¿½itan highscore za {gameName}: {_cache[gameName].entries.Count} unosa");
         }
         else
         {

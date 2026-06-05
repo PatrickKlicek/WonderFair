@@ -21,6 +21,10 @@ public abstract class CarnivalGame : MonoBehaviour
     protected TimeSpan timeLeft;
     protected bool isRunning = false;
     protected int score = 0;
+
+    public          TimeSpan TimeLeft  => isRunning ? timeLeft : gameDurationTimespan;
+    public virtual  bool     IsRunning => isRunning;
+    public virtual  int      Score     => score;
     private bool _halfTimeSoundPlayed = false;
     private bool _countdownStarted = false;
     private bool _startSoundPlayed = false;
@@ -58,13 +62,16 @@ public abstract class CarnivalGame : MonoBehaviour
                 StartCountdown(() => { });
             }
 
-            if (timeLeft.TotalSeconds < 10)
-                timer.text = string.Format("{0:0}.{1:0}", timeLeft.Seconds, timeLeft.Milliseconds / 100);
-            else if (timeLeft.TotalSeconds < 60)
-                timer.text = string.Format("{0:00}.{1:0}", timeLeft.Seconds, timeLeft.Milliseconds / 100);
-            else
-                timer.text = string.Format("{0:0}:{1:00}", timeLeft.Minutes, timeLeft.Seconds);
-            scoreboard.text = score.ToString();
+            if (timer != null)
+            {
+                if (timeLeft.TotalSeconds < 10)
+                    timer.text = string.Format("{0:0}.{1:0}", timeLeft.Seconds, timeLeft.Milliseconds / 100);
+                else if (timeLeft.TotalSeconds < 60)
+                    timer.text = string.Format("{0:00}.{1:0}", timeLeft.Seconds, timeLeft.Milliseconds / 100);
+                else
+                    timer.text = string.Format("{0:0}:{1:00}", timeLeft.Minutes, timeLeft.Seconds);
+            }
+            if (scoreboard != null) scoreboard.text = score.ToString();
         }
     }
 
