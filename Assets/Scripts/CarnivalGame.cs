@@ -56,7 +56,7 @@ public abstract class CarnivalGame : MonoBehaviour
                 PlayNotificationSound();
             }
 
-            if (!_countdownStarted && secondsLeft == 10)
+            if (!_countdownStarted && secondsLeft <= 10.1f)
             {
                 _countdownStarted = true;
                 StartCountdown(() => { });
@@ -89,9 +89,9 @@ public abstract class CarnivalGame : MonoBehaviour
             _countdownStarted = false;
             _startSoundPlayed = false;
             _endSoundPlayed = false;
+            PlayStartSound();
+            StartGameLogic();
         }
-        PlayStartSound();
-        StartGameLogic();
     }
     protected virtual void StartGameLogic()
     {
