@@ -7,13 +7,16 @@ public class MainMenu : MonoBehaviour
     public GameObject startMenu;
     public GameObject instructions;
     public GameObject exitMenu;
-    public GameObject teleportInteractor;
-    public FirstPersonLocomotor continuousLocomotor;
+    public GameObject playerController;
+
+    void Start()
+    {
+        playerController.SetActive(false);        
+    }
 
     public void Play()
     {
-        teleportInteractor.SetActive(true);
-        continuousLocomotor.enabled = true;
+        playerController.SetActive(true);
         startMenu.SetActive(false);
         canvas.SetActive(false);
         exitMenu.SetActive(true);
