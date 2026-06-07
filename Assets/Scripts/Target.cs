@@ -11,10 +11,12 @@ public class Target : MonoBehaviour
     [HideInInspector] public float raiseTimestamp = 0;
 
     private Animator animator;
+    private AudioSource audioSource;
 
     void Start()
     {
         animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -45,6 +47,7 @@ public class Target : MonoBehaviour
             TargetHit.Invoke(points);
             GameObject sp = Instantiate(scorePopup, transform.position, Quaternion.identity);
             sp.GetComponent<FloatingScorePopup>().Init(points);
+            audioSource.Play();
             LowerTarget();
         }
     }

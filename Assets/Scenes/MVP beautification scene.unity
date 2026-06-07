@@ -26047,6 +26047,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3847986669073672994, guid: 08400965978f52544add0427fcea064f, type: 3}
+      propertyPath: gameDuration
+      value: 120
+      objectReference: {fileID: 0}
+    - target: {fileID: 3847986669073672994, guid: 08400965978f52544add0427fcea064f, type: 3}
       propertyPath: teleportScript
       value: 
       objectReference: {fileID: 343452362}

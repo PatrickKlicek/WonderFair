@@ -14,6 +14,12 @@ public class Gun : MonoBehaviour
     public float hapticDuration = 0.1f;
 
     private float shootTimestamp = 0;
+    private AudioSource audioSource;
+
+    void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
 
     // Update is called once per frame
     void Update()
@@ -22,9 +28,11 @@ public class Gun : MonoBehaviour
         {
             if (Time.time -  shootTimestamp > shootInterval)
             {
+                shootTimestamp = Time.time;
                 GameObject b = Instantiate(ballPrefab, placeholder.position, Quaternion.identity);
                 b.GetComponent<Rigidbody>().linearVelocity = placeholder.forward * ballSpeed;
                 SendHaptics();
+                audioSource.Play();
             }
         }
     }
