@@ -2,19 +2,19 @@ using UnityEngine;
 
 public class MenuTrigger : MonoBehaviour
 {
-    public GameObject menuCanvas;
+    public GameObject menu;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            menuCanvas.SetActive(true);
+            menu.SetActive(true);
             transform.GetChild(0).gameObject.SetActive(true);
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player")) menuCanvas.SetActive(false);
+        if (other.CompareTag("Player")) menu.SetActive(false);
     }
 }

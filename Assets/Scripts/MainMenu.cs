@@ -3,22 +3,25 @@ using UnityEngine;
 
 public class MainMenu : MonoBehaviour
 {
-    public GameObject canvas;
+    public GameObject menu;
     public GameObject startMenu;
     public GameObject instructions;
     public GameObject exitMenu;
     public GameObject playerController;
+    public TeleportInteractable teleportScript;
 
     void Start()
     {
-        playerController.SetActive(false);        
+        playerController.SetActive(false);
+        teleportScript.AllowTeleport = false;
     }
 
     public void Play()
     {
         playerController.SetActive(true);
+        teleportScript.AllowTeleport = true;
         startMenu.SetActive(false);
-        canvas.SetActive(false);
+        menu.SetActive(false);
         exitMenu.SetActive(true);
     }
 
