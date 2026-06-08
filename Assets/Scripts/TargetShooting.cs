@@ -16,10 +16,10 @@ public class TargetShooting : CarnivalGame
     public Scoreboard Scoreboard;
 
     private List<Target> targets = new();
-    public float targetRaiseInterval;
+    private float targetRaiseInterval;
     private float targetRaiseTimestamp = 0;
     private float targetSpeedupTimestamp = 0;
-    public float movingTargetRaiseInterval;
+    private float movingTargetRaiseInterval;
     private float movingTargetRaiseTimestamp = 0;
     private float movingTargetSpeedupTimestamp = 0;
 
